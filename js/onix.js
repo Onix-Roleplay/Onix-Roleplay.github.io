@@ -30,7 +30,11 @@
             const r = await fetch('js/data.json?t=' + Date.now(), { cache: 'no-store' });
             if (!r.ok) return;
             const data = await r.json();
-            Object.assign(cfg, data);
+            const fallback = window.ONIX || {};
+            Object.assign(cfg, fallback, data);
+            if (!cfg.products || !cfg.products.length) cfg.products = fallback.products || [];
+            if (!cfg.discord) cfg.discord = fallback.discord;
+            if (!cfg.paypal) cfg.paypal = fallback.paypal;
         } catch (e) {}
     }
 

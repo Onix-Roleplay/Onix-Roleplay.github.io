@@ -96,6 +96,24 @@
         };
     }
 
+    function fallbackData() {
+        const src = window.ONIX || {};
+        try { return JSON.parse(JSON.stringify(src)); } catch (e) { return { products: [], news: [], streamers: [], gallery: [] }; }
+    }
+
+    function mergeData(next) {
+        const base = Object.assign(fallbackData(), state.data || {});
+        const out = Object.assign({}, base, next || {});
+        ['discord', 'tiktok', 'connect', 'cfxCode', 'paypal', 'paypalNote', 'pravila', 'statusOnline', 'statusOffline', 'homeLead'].forEach((k) => {
+            if (!out[k] && base[k]) out[k] = base[k];
+        });
+        ['news', 'streamers', 'gallery', 'videos'].forEach((k) => {
+            if ((!out[k] || !out[k].length) && base[k] && base[k].length) out[k] = base[k];
+        });
+        if (!out.products || !out.products.length) out.products = base.products || [];
+        return out;
+    }
+
     function parsePrice(v) {
         const n = Number(String(v || '').replace(',', '.').trim());
         return Number.isFinite(n) ? n : 0;
@@ -139,7 +157,7 @@
             return 'Token treba Authorize / Enable SSO za ovu organizaciju na GitHubu (settings → tokens).';
         }
         if (status === 403 || status === 404) {
-            return 'Token nema pravo pisanja na ovaj repo. Treba scope repo, i SSO za Onix-Roleplay / OnixPravila.';
+            return 'Token je na pogrešnom nalogu. Resource owner mora biti Onix-Roleplay, repo Onix-Roleplay.github.io, Contents = Read and write.';
         }
         return (text || 'GitHub greška').slice(0, 180);
     }
@@ -281,6 +299,7 @@
     async function publish() {
         if (!state.data) return;
         saveProductFromForm();
+        state.data = mergeData(state.data);
         rememberToken();
         setStatus('Objavljujem…');
         $('#adminPublish').disabled = true;
@@ -324,6 +343,8 @@
         $('#adminApp').hidden = !on;
         if (on) {
             $('#adminLogin').style.display = 'none';
+            const objavaTab = $('#adminTabs [data-tab="objava"]');
+            if (objavaTab) objavaTab.hidden = isLocal();
             renderAll();
         }
     }
@@ -467,8 +488,8 @@
         sessionStorage.setItem('onix-admin-key', pass);
         showErr('');
         if (!state.data) {
-            try { state.data = await loadJson('js/data.json'); } catch (e) {
-                state.data = { products: [], news: [], streamers: [], gallery: [] };
+            try { state.data = mergeData(await loadJson('js/data.json')); } catch (e) {
+                state.data = fallbackData();
             }
         }
         showApp(true);
@@ -512,11 +533,12 @@
             }
         });
 
-        $('#productForm').addEventListener('submit', (e) => {
+        $('#productForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const isNew = !($('#pId').value || '').trim();
             if (!saveProductFromForm(isNew)) return toast('Upiši naziv');
-            toast('Spremljeno — sad Objavi na sajt');
+            toast('Spremljeno');
+            if (isLocal()) await publish();
         });
         $('#pReset').addEventListener('click', () => {
             state.selectedProduct = '';
@@ -549,7 +571,8 @@
             if (!p) return;
             p.price = parsePrice(inp.value);
             if ($('#pId').value === p.id) $('#pPrice').value = p.price;
-            toast('Cijena ' + p.price + ' € — sad Objavi na sajt');
+            toast('Cijena ' + p.price + ' €');
+            if (isLocal()) publish();
         });
 
         $('#newsForm').addEventListener('submit', (e) => {
@@ -749,7 +772,7 @@
         wire();
         try {
             state.lock = await loadJson('js/admin.lock.json');
-            state.data = await loadJson('js/data.json');
+            state.data = mergeData(await loadJson('js/data.json'));
         } catch (e) {
             showErr('Podaci se nisu učitali. Probaj Ctrl+F5, pa opet Uđi.');
         }

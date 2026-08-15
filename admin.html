@@ -21,7 +21,7 @@
             <img src="assets/onix-logo.png" alt="ONIX" />
             <p class="kicker">Kuća</p>
             <h1>ADMIN</h1>
-            <p class="lead">Donacije, slike, novosti, strimeri i linkovi. Posjetioci ovdje ne ulaze.</p>
+            <p class="lead">Uređuj ovdje na ovom računaru: klikni paket, izmijeni, Spremi. Ide na sajt samo.</p>
             <form id="adminForm">
                 <input class="field" id="adminPass" type="password" placeholder="Lozinka" autocomplete="current-password" />
                 <p class="note" id="adminErr" hidden></p>
@@ -197,10 +197,19 @@
         <section class="admin-panel" id="tab-objava">
             <div class="admin-form wide">
                 <p class="kicker">Objava</p>
-                <h3>Bez ovoga cijena ne ide na sajt</h3>
-                <p class="note">1. Otvori link ispod i napravi token (prava <b>repo</b>, nalog <b>seid98sutovic-cloud</b>).<br>2. Kopiraj token, zalijepi ovdje, stisni <b>Spremi token</b>.<br>3. Vrati se na Donacije, upiši cijenu na kartici, pa gore desno <b>Objavi na sajt</b>.<br>Token ostaje samo u ovom browseru. Jednom ga staviš, poslije samo mijenjaš cijenu i objavljuješ.</p>
+                <h3>Kako napraviti token</h3>
+                <p class="note">
+                    Moraš biti ulogovan na GitHub kao <b>seid98sutovic-cloud</b>.<br><br>
+                    1. Stisni <b>Napravi token</b>.<br>
+                    2. Ako vidiš <b>Resource owner</b>, izaberi <b>Onix-Roleplay</b> (ne svoj nalog).<br>
+                    3. Repository access → <b>Only select repositories</b> → <b>Onix-Roleplay.github.io</b>.<br>
+                    4. Permissions → <b>Contents</b> → <b>Read and write</b>.<br>
+                    5. Generate, kopiraj cijeli token odmah (github_pat_… ili ghp_…).<br>
+                    6. Zalijepi ovdje → Spremi token → Donacije → Objavi na sajt.
+                </p>
+                <p class="note">Ako GitHub pita za <b>classic</b> token: ostavi kvačicu samo na <b>repo</b>, Generate, kopiraj ghp_…</p>
                 <p class="admin-form-btns" style="margin:0 0 16px">
-                    <a class="btn gold" href="https://github.com/settings/tokens/new?scopes=repo&amp;description=ONIX%20admin" target="_blank" rel="noreferrer">Napravi token</a>
+                    <a class="btn gold" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">Napravi token</a>
                 </p>
                 <label>GitHub token</label>
                 <input class="field" id="ghToken" type="password" placeholder="ghp_... zalijepi ovdje" autocomplete="off" />
@@ -213,6 +222,7 @@
         </section>
     </div>
 
-    <script src="js/admin.js?v=24"></script>
+    <script src="js/config.js?v=23"></script>
+    <script src="js/admin.js?v=26"></script>
 </body>
 </html>

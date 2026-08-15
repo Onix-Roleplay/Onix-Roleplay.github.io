@@ -106,6 +106,15 @@ while ($listener.IsListening) {
                 Write-Json $ctx 400 @{ error = 'Nema podataka' }
                 continue
             }
+            $incoming = $json | ConvertFrom-Json
+            if (@($incoming.products).Count -eq 0) {
+                Write-Json $ctx 400 @{ error = 'Katalog je prazan — nije spremljeno' }
+                continue
+            }
+            if ([string]::IsNullOrWhiteSpace([string]$incoming.discord) -or [string]::IsNullOrWhiteSpace([string]$incoming.paypal)) {
+                Write-Json $ctx 400 @{ error = 'Fale linkovi sajta — nije spremljeno' }
+                continue
+            }
             $pathData = Join-Path $root 'js\data.json'
             $utf8 = New-Object Text.UTF8Encoding $false
             [IO.File]::WriteAllText($pathData, $json, $utf8)
@@ -147,7 +156,10 @@ while ($listener.IsListening) {
                     git commit -m "Admin: izmjena sajta"
                 }
                 git push origin HEAD
-                $pushed = $LASTEXITCODE -eq 0
+                $ok1 = $LASTEXITCODE -eq 0
+                git push onixrp HEAD
+                $ok2 = $LASTEXITCODE -eq 0
+                $pushed = $ok1 -or $ok2
                 Write-Json $ctx 200 @{ ok = $true; pushed = $pushed; detail = $(if ($pushed) { 'Push OK' } else { 'Push nije uspio' }) }
             } catch {
                 Write-Json $ctx 200 @{ ok = $true; pushed = $false; detail = [string]$_.Exception.Message }
