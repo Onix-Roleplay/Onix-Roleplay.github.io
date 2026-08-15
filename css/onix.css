@@ -932,6 +932,14 @@ select.field option { color: #111; background: #fff; }
     gap: 18px;
     align-items: start;
 }
+.admin-split.catalog {
+    grid-template-columns: 1fr minmax(280px, 400px);
+}
+.admin-item { cursor: pointer; }
+.admin-item.on {
+    border-color: var(--gold);
+    background: rgba(255, 215, 0, .08);
+}
 .admin-form {
     border: 1px solid var(--line);
     background: rgba(5, 10, 26, .72);

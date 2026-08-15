@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/onix.css?v=23" />
+    <link rel="stylesheet" href="css/onix.css?v=24" />
 </head>
 <body class="admin-body">
     <div class="grain"></div>
@@ -57,10 +57,14 @@
         </nav>
 
         <section class="admin-panel on" id="tab-donacije">
-            <div class="admin-split">
+            <div class="admin-split catalog">
+                <div>
+                    <p class="kicker" style="margin-bottom:10px">Na sajtu sada</p>
+                    <div class="admin-list" id="productList"></div>
+                </div>
                 <form class="admin-form" id="productForm">
-                    <p class="kicker">Paket</p>
-                    <h3 id="productFormTitle">Nova donacija</h3>
+                    <p class="kicker">Uređuješ paket</p>
+                    <h3 id="productFormTitle">Odaberi paket</h3>
                     <input type="hidden" id="pId" />
                     <label>Naziv</label>
                     <input class="field" id="pName" placeholder="npr. Nocturne S" required />
@@ -81,11 +85,11 @@
                     <input class="field" id="pFile" type="file" accept="image/*" />
                     <img class="admin-preview" id="pPreview" alt="" hidden />
                     <div class="admin-form-btns">
-                        <button type="submit" class="btn gold">Spremi paket</button>
-                        <button type="button" class="btn ghost" id="pReset">Novi</button>
+                        <button type="submit" class="btn gold">Spremi izmjene</button>
+                        <button type="button" class="btn ghost" id="pReset">Dodaj novi</button>
                     </div>
+                    <p class="note">Klikni paket lijevo. Mijenjaš cijenu, ime, sliku. Zatim Objavi na sajt.</p>
                 </form>
-                <div class="admin-list" id="productList"></div>
             </div>
         </section>
 
@@ -209,6 +213,6 @@
         </section>
     </div>
 
-    <script src="js/admin.js?v=23"></script>
+    <script src="js/admin.js?v=24"></script>
 </body>
 </html>
