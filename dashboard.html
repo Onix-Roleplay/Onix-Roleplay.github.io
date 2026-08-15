@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/onix.css" />
+    <link rel="stylesheet" href="css/onix.css?v=22" />
 </head>
 <body>
     <div class="grain"></div>
@@ -25,7 +25,7 @@
             <input class="field" id="dashDiscord" placeholder="Discord ime" />
             <input class="field" id="dashCharacter" placeholder="Ime karaktera (IC)" />
             <button type="button" class="btn gold" id="dashEnter">Prijavi se putem Discord-a</button>
-            <a class="btn ghost" href="https://discord.gg/wdUntyZzt" target="_blank" rel="noreferrer" style="width:100%;justify-content:center;margin-top:8px">Otvori Discord</a>
+            <a class="btn ghost" data-link="discord" href="https://discord.gg/wdUntyZzt" target="_blank" rel="noreferrer" style="width:100%;justify-content:center;margin-top:8px">Otvori Discord</a>
             <a class="btn ghost" data-link="tiktok" href="https://www.tiktok.com/@onixrp25" target="_blank" rel="noreferrer" style="width:100%;justify-content:center;margin-top:8px">TikTok · @onixrp25</a>
         </div>
     </div>
@@ -49,7 +49,7 @@
                     <div class="stat"><span>FiveM</span><b id="dashPlayers">—</b></div>
                     <div class="stat"><span>Discord članova</span><b id="dashMembers">—</b></div>
                     <div class="stat"><span>Discord online</span><b id="dashOnline">—</b></div>
-                    <div class="stat"><span>Connect</span><b>lera5g7</b></div>
+                    <div class="stat"><span>Connect</span><b id="dashConnect">lera5g7</b></div>
                 </div>
                 <div class="box">Ovdje će stajati statistika sa servera kad spojimo nalog. Izgled je spreman.</div>
             </section>
@@ -82,8 +82,8 @@
         </div>
     </div>
 
-    <script src="js/config.js"></script>
-    <script src="js/onix.js"></script>
+    <script src="js/config.js?v=22"></script>
+    <script src="js/onix.js?v=22"></script>
     <script>OnixSite.boot('dash');</script>
 </body>
 </html>

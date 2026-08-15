@@ -3,7 +3,7 @@
 // (js/data.json). Ovaj fajl je rezervna kopija ako data.json ne učita.
 
 window.ONIX = {
-  name: 'ONIX',
+  name: 'ONIX ROLEPLAY',
   tag: 'ROLEPLAY',
   kicker: 'Temeljne vrijednosti',
   city: 'Los Santos',

@@ -42,12 +42,16 @@
         });
         const lead = document.querySelector('[data-home="lead"]');
         if (lead && cfg.homeLead) lead.textContent = cfg.homeLead;
+        setText('[data-live="connect"]', cfg.connect || 'cfx.re/join/lera5g7');
+        const dashConnect = $('#dashConnect');
+        if (dashConnect) dashConnect.textContent = cfg.cfxCode || cfg.connect || 'lera5g7';
+        if (cfg.name) document.title = document.title.replace(/^ONIX(?: ROLEPLAY)?(?= —|$)/, cfg.name);
     }
 
     function paypalUrl(product, character) {
         const p = String(cfg.paypal || '').trim();
         if (!p) return '';
-        const name = encodeURIComponent((product.name || 'ONIX') + (character ? ' — ' + character : ''));
+        const name = encodeURIComponent((product.name || 'ONIX ROLEPLAY') + (character ? ' — ' + character : ''));
         const amount = Number(product.price) || 0;
         if (/paypal\.me/i.test(p)) {
             const base = p.replace(/\/$/, '');
@@ -70,10 +74,8 @@
     function renderNav(active) {
         const nav = $('nav.top');
         if (!nav) return;
-        const discord = cfg.discord || '';
-        const sess = getSession();
         nav.innerHTML =
-            '<a class="brand" href="index.html"><img src="assets/onix-logo.png" alt="ONIX" /><b>ONIX</b></a>' +
+            '<a class="brand" href="index.html"><img src="assets/onix-logo.png" alt="ONIX ROLEPLAY" /><b>ONIX ROLEPLAY</b></a>' +
             '<button type="button" class="burger" id="burger" aria-label="Meni">☰</button>' +
             '<div class="links" id="navLinks">' +
             '<a class="' + (active === 'shop' ? 'active' : '') + '" href="shop.html">Trgovina</a>' +
@@ -190,9 +192,16 @@
             return;
         }
         let on = true;
+        const onKey = (e) => {
+            if (e.code !== 'Enter' && e.code !== 'Space') return;
+            if (!document.body.contains(gate) || gate.classList.contains('hide')) return;
+            e.preventDefault();
+            start();
+        };
         const start = () => {
             if (gate.classList.contains('hide')) return;
             gate.classList.add('hide');
+            window.removeEventListener('keydown', onKey);
             if (gateVideo) gateVideo.pause();
             if (video) {
                 video.muted = true;
@@ -205,9 +214,7 @@
             setTimeout(() => gate.remove(), 900);
         };
         gate.addEventListener('pointerdown', start);
-        window.addEventListener('keydown', (e) => {
-            if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); start(); }
-        });
+        window.addEventListener('keydown', onKey);
         if (location.hash === '#enter') start();
         if (soundBtn && bgm) {
             soundBtn.addEventListener('click', () => {
@@ -226,7 +233,8 @@
     function openModal(product) {
         const modal = $('#buy');
         if (!modal || !product) return;
-        $('#buyImg').src = product.img;
+        const img = $('#buyImg');
+        if (img) img.src = product.img || '';
         $('#buyCode').textContent = product.code;
         $('#buyName').textContent = product.name;
         $('#buyBlurb').textContent = product.blurb;
@@ -266,9 +274,9 @@
         if (!reel) return;
         const cars = (cfg.products || []).filter((p) => p.cat === 'vozilo');
         reel.innerHTML = cars.map((p) =>
-            '<a class="card" href="shop.html#' + p.id + '">' +
-            '<img src="' + p.img + '" alt="' + p.name + '" />' +
-            '<div class="meta"><p class="code">' + p.code + '</p><h4>' + p.name + '</h4><p class="price">' + p.price + ' €</p></div>' +
+            '<a class="card" href="shop.html#' + encodeURIComponent(p.id) + '">' +
+            '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" />' +
+            '<div class="meta"><p class="code">' + esc(p.code) + '</p><h4>' + esc(p.name) + '</h4><p class="price">' + esc(p.price) + ' €</p></div>' +
             '</a>'
         ).join('');
     }
@@ -282,7 +290,7 @@
             return;
         }
         box.innerHTML = list.slice(0, 3).map((p) =>
-            '<a class="pack" href="shop.html#' + p.id + '"><p class="code">' + p.code + '</p><h4>' + p.name + '</h4><p>' + p.blurb + '</p><p class="price">' + p.price + ' €</p></a>'
+            '<a class="pack" href="shop.html#' + encodeURIComponent(p.id) + '"><p class="code">' + esc(p.code) + '</p><h4>' + esc(p.name) + '</h4><p>' + esc(p.blurb) + '</p><p class="price">' + esc(p.price) + ' €</p></a>'
         ).join('');
     }
 
@@ -297,10 +305,10 @@
                 return;
             }
             grid.innerHTML = list.map((p) =>
-                '<button type="button" class="product" data-id="' + p.id + '">' +
-                '<img src="' + p.img + '" alt="' + p.name + '" />' +
-                '<div class="pad"><p class="code">' + p.code + '</p><h3>' + p.name + '</h3>' +
-                '<div class="row"><span>' + p.blurb + '</span><b>' + p.price + ' €</b></div></div></button>'
+                '<button type="button" class="product" data-id="' + esc(p.id) + '">' +
+                '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" />' +
+                '<div class="pad"><p class="code">' + esc(p.code) + '</p><h3>' + esc(p.name) + '</h3>' +
+                '<div class="row"><span>' + esc(p.blurb) + '</span><b>' + esc(p.price) + ' €</b></div></div></button>'
             ).join('');
         };
         draw();
@@ -352,7 +360,7 @@
         if (!box) return;
         const list = cfg.gallery || [];
         box.innerHTML = list.map((g) =>
-            '<figure><img src="' + g.img + '" alt="' + esc(g.cap || '') + '" /><figcaption>' + esc(g.cap || '') + '</figcaption></figure>'
+            '<figure><img src="' + esc(g.img) + '" alt="' + esc(g.cap || '') + '" /><figcaption>' + esc(g.cap || '') + '</figcaption></figure>'
         ).join('');
     }
 
@@ -361,7 +369,7 @@
         if (!box) return;
         const list = cfg.videos || [];
         box.innerHTML = list.map((v) =>
-            '<article><video controls playsinline poster="' + (v.poster || '') + '" src="' + v.src + '"></video><h4>' + esc(v.title) + '</h4></article>'
+            '<article><video controls playsinline poster="' + esc(v.poster || '') + '" src="' + esc(v.src) + '"></video><h4>' + esc(v.title) + '</h4></article>'
         ).join('');
     }
 
@@ -376,8 +384,8 @@
             return;
         }
         box.innerHTML = shown.map((s) =>
-            '<a class="streamer" href="' + (s.url || '#') + '" target="_blank" rel="noreferrer">' +
-            (s.img ? '<img src="' + s.img + '" alt="" />' : '<div class="ph"></div>') +
+            '<a class="streamer" href="' + esc(s.url || '#') + '" target="_blank" rel="noreferrer">' +
+            (s.img ? '<img src="' + esc(s.img) + '" alt="" />' : '<div class="ph"></div>') +
             '<div><p class="code">' + esc((s.platform || '').toUpperCase()) + (s.live ? ' · LIVE' : '') + '</p>' +
             '<h4>' + esc(s.name) + '</h4></div></a>'
         ).join('');
@@ -424,7 +432,7 @@
         const code = cfg.cfxCode || 'lera5g7';
         const invite = String(cfg.discord || 'wdUntyZzt').replace(/\/$/, '').split('/').pop();
         const out = {
-            fivem: { online: false, clients: 0, max: 64, hostname: 'ONiX Roleplay V2' },
+            fivem: { online: false, clients: 0, max: 64, hostname: 'ONIX ROLEPLAY' },
             discord: { members: 0, online: 0, name: 'ONiX Roleplay' }
         };
         const grab = async (url) => {
@@ -433,10 +441,12 @@
             return r.json();
         };
         try {
-            const local = await grab('/api/live');
-            if (local && (local.fivem || local.discord)) {
-                paintLive(local);
-                return;
+            if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') {
+                const local = await grab('/api/live');
+                if (local && (local.fivem || local.discord)) {
+                    paintLive(local);
+                    return;
+                }
             }
         } catch (e) {}
         try {
@@ -483,7 +493,7 @@
             : 'Discord';
         setText('[data-live="fivem"]', fivemTxt);
         setText('[data-live="discord"]', discTxt);
-        setText('[data-live="host"]', f.hostname || 'ONiX Roleplay V2');
+        setText('[data-live="host"]', f.hostname || 'ONIX ROLEPLAY');
         setText('[data-live="players"]', (f.clients || 0) + ' / ' + (f.max || 64));
         setText('[data-live="members"]', String(d.members || '—'));
         setText('[data-live="d-online"]', String(d.online || '—'));

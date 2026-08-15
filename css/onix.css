@@ -175,8 +175,9 @@ nav.top {
 .brand img { width: 42px; height: 42px; object-fit: contain; }
 .brand b {
     font-family: var(--serif);
-    letter-spacing: .28em;
-    font-size: 13px;
+    letter-spacing: .14em;
+    font-size: 12px;
+    white-space: nowrap;
 }
 .links {
     display: flex;
@@ -871,6 +872,7 @@ select.field option { color: #111; background: #fff; }
     .card { flex-basis: 84vw; }
     .product img, .sheet img { height: 220px; min-height: 220px; }
     .nav-right .btn.ghost { display: none; }
+    .brand b { font-size: 10px; letter-spacing: .08em; }
 }
 
 .admin-body { min-height: 100svh; }
