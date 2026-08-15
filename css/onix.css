@@ -298,6 +298,11 @@ nav.top {
 .login-card h1 { font-family: var(--serif); letter-spacing: .16em; font-size: 34px; margin-bottom: 8px; }
 .login-card .lead { color: var(--mute); margin-bottom: 22px; }
 .login-card .btn { width: 100%; justify-content: center; margin-top: 8px; }
+#adminErr {
+    color: #ff8fa3;
+    min-height: 1.2em;
+    margin: 0 0 8px;
+}
 
 .dash {
     display: none;

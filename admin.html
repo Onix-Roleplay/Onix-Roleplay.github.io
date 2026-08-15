@@ -22,8 +22,11 @@
             <p class="kicker">Kuća</p>
             <h1>ADMIN</h1>
             <p class="lead">Donacije, slike, novosti, strimeri i linkovi. Posjetioci ovdje ne ulaze.</p>
-            <input class="field" id="adminPass" type="password" placeholder="Lozinka" autocomplete="current-password" />
-            <button type="button" class="btn gold" id="adminEnter">Uđi</button>
+            <form id="adminForm">
+                <input class="field" id="adminPass" type="password" placeholder="Lozinka" autocomplete="current-password" />
+                <p class="note" id="adminErr" hidden></p>
+                <button type="submit" class="btn gold" id="adminEnter">Uđi</button>
+            </form>
             <a class="btn ghost" href="index.html" style="width:100%;justify-content:center;margin-top:8px">Nazad na sajt</a>
         </div>
     </div>
@@ -204,6 +207,6 @@
         </section>
     </div>
 
-    <script src="js/admin.js"></script>
+    <script src="js/admin.js?v=21"></script>
 </body>
 </html>
