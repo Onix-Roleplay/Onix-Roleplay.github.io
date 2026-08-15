@@ -1,23 +1,17 @@
-@{value={
+{
+  "name": "ONIX ROLEPLAY",
+  "tag": "ROLEPLAY",
+  "kicker": "Temeljne vrijednosti",
+  "city": "Los Santos",
+  "line": "Roleplay je ispred ruleplaya.",
+  "pravila": "https://onixpravila.github.io/onix-pravila/",
   "discord": "https://discord.gg/wdUntyZzt",
   "tiktok": "https://www.tiktok.com/@onixrp25",
   "connect": "cfx.re/join/lera5g7",
   "cfxCode": "lera5g7",
   "paypal": "seid98sutovic@gmail.com",
   "paypalNote": "Uplata ide na PayPal. Nakon uplate otvori ticket na Discordu sa imenom karaktera i naručenim paketom.",
-  "pravila": "https://onixpravila.github.io/onix-pravila/",
-  "statusOnline": "Server je na mreži",
-  "statusOffline": "Server nije na mreži",
-  "homeLead": "Ovo nije još jedan server. Ovo je kuća. Priča ide ispred pobjede, karakter ispred ega, grad ispred kaosa.",
-  "streamers": [
-    {
-      "name": "ONIX Roleplay",
-      "platform": "tiktok",
-      "url": "https://www.tiktok.com/@onixrp25",
-      "img": "assets/onix-logo.png",
-      "live": false
-    }
-  ],
+  "streamers": [],
   "news": [
     {
       "date": "2026-08-15",
@@ -27,35 +21,42 @@
     {
       "date": "2026-08-15",
       "title": "Donacije",
-      "body": "Katalozi vozila, premium i organizacija se uređuju iz admin panela. Plaćanje ide preko PayPal."
+      "body": "Katalozi vozila, premium i organizacija se popunjavaju. Plaćanje ide preko PayPal."
     }
   ],
   "gallery": [
-    { "img": "assets/poster.png", "cap": "House" },
-    { "img": "assets/car-nocturne.png", "cap": "Nocturne" },
-    { "img": "assets/car-apex.png", "cap": "Apex" },
-    { "img": "assets/org-house.png", "cap": "Sjedište" }
+    {
+      "img": "assets/poster.png",
+      "cap": "House"
+    },
+    {
+      "img": "assets/car-nocturne.png",
+      "cap": "Nocturne"
+    },
+    {
+      "img": "assets/car-apex.png",
+      "cap": "Apex"
+    },
+    {
+      "img": "assets/org-house.png",
+      "cap": "Sjedište"
+    }
   ],
   "videos": [
-    { "title": "Intro", "src": "assets/intro.mp4", "poster": "assets/poster.png" }
+    {
+      "title": "Intro",
+      "src": "assets/intro.mp4",
+      "poster": "assets/poster.png"
+    }
   ],
   "products": [
-    {
-      "id": "test-donacija-4456",
-      "cat": "vozilo",
-      "code": "TEST 01",
-      "name": "TEST DONACIJA",
-      "blurb": "test da vidimo da li radi",
-      "price": 1,
-      "img": "assets/uploads/screenshot-2026-08-13-234348-1786831023077.jpg"
-    },
     {
       "id": "nocturne",
       "cat": "vozilo",
       "code": "ATELIER 01",
       "name": "Nocturne S",
       "blurb": "Noćna limuzina. Mokri asfalt, cyan rub, tišina u kabini.",
-      "price": 35,
+      "price": 1,
       "img": "assets/car-nocturne.png"
     },
     {
@@ -123,4 +124,3 @@
     }
   ]
 }
-; PSPath=C:\Users\Seid Sutovic\Desktop\SKRIPTE FIVEM\Fivem-Server\onix-web\js\data.json; PSParentPath=C:\Users\Seid Sutovic\Desktop\SKRIPTE FIVEM\Fivem-Server\onix-web\js; PSChildName=data.json; PSDrive=; PSProvider=; ReadCount=1}
