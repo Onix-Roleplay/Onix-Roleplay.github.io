@@ -51,6 +51,15 @@
   ],
   "products": [
     {
+      "id": "test-placanja-2839",
+      "cat": "vozilo",
+      "code": "Onix",
+      "name": "Test placanja",
+      "blurb": "Paypal test",
+      "price": 1,
+      "img": "assets/uploads/screenshot-2026-08-13-234348-1786834556221.jpg"
+    },
+    {
       "id": "apex",
       "cat": "vozilo",
       "code": "ATELIER 02",
