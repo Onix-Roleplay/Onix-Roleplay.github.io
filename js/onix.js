@@ -173,8 +173,18 @@
     function setupGate() {
         const gate = $('.gate');
         const video = $('#intro');
+        const gateVideo = $('#gateVideo');
         const bgm = $('#bgm');
         const soundBtn = $('#soundBtn');
+        if (gateVideo) {
+            gateVideo.muted = true;
+            gateVideo.playsInline = true;
+            const tryPlay = () => gateVideo.play().catch(() => {});
+            tryPlay();
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) tryPlay();
+            });
+        }
         if (!gate) {
             if (video) { video.muted = true; video.play().catch(() => {}); }
             return;
@@ -183,6 +193,7 @@
         const start = () => {
             if (gate.classList.contains('hide')) return;
             gate.classList.add('hide');
+            if (gateVideo) gateVideo.pause();
             if (video) {
                 video.muted = true;
                 video.play().catch(() => {});
