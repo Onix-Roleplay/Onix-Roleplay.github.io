@@ -53,11 +53,11 @@
     {
       "id": "nocturne",
       "cat": "vozilo",
-      "code": "ATELIER 01",
-      "name": "Nocturne S",
-      "blurb": "Noćna limuzina. Mokri asfalt, cyan rub, tišina u kabini.",
+      "code": "onix",
+      "name": "Test placanja",
+      "blurb": "test za za placanje",
       "price": 1,
-      "img": "assets/car-nocturne.png"
+      "img": "assets/uploads/screenshot-2026-08-13-234348-1786831462690.jpg"
     },
     {
       "id": "apex",
