@@ -51,15 +51,6 @@
   ],
   "products": [
     {
-      "id": "nocturne",
-      "cat": "vozilo",
-      "code": "onix",
-      "name": "Test placanja",
-      "blurb": "test za za placanje",
-      "price": 1,
-      "img": "assets/uploads/screenshot-2026-08-13-234348-1786831462690.jpg"
-    },
-    {
       "id": "apex",
       "cat": "vozilo",
       "code": "ATELIER 02",
