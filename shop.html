@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="bs">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trgovina — ONIX ROLEPLAY</title>
+    <meta name="theme-color" content="#00b4ff" />
+    <meta name="description" content="ONIX trgovina. Vozila, premium i donacije za organizacije." />
+    <link rel="icon" href="assets/onix-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/onix.css" />
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="scan"></div>
+    <nav class="top"></nav>
+
+    <header class="shop-hero">
+        <p class="kicker">Trgovina</p>
+        <h1 class="shine">SHOP</h1>
+        <p class="lead" style="max-width:560px;color:var(--mute);margin-top:16px;line-height:1.7">
+            Vozila, premium, donacije za organizacije. Plaćanje ide preko PayPal. Pakete i slike dodaješ u admin panelu.
+        </p>
+        <div class="filters">
+            <button type="button" class="chip on" data-filter="sve">Sve</button>
+            <button type="button" class="chip" data-filter="vozilo">Vozila</button>
+            <button type="button" class="chip" data-filter="premium">Premium</button>
+            <button type="button" class="chip" data-filter="org">Organizacije</button>
+        </div>
+    </header>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="modal" id="buy" role="dialog" aria-modal="true">
+        <div class="sheet">
+            <img id="buyImg" alt="" />
+            <div class="info">
+                <button type="button" class="close" id="buyClose" aria-label="Zatvori">×</button>
+                <p class="code" id="buyCode"></p>
+                <h3 id="buyName"></h3>
+                <p id="buyBlurb"></p>
+                <p class="price" id="buyPrice"></p>
+                <input class="field" id="buyChar" placeholder="Ime karaktera (IC)" />
+                <p class="note" id="buyNote"></p>
+                <button type="button" class="btn gold" id="buyPay">Plati preko PayPal</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site">
+        <a href="index.html">← Kuća</a>
+        <a href="https://www.tiktok.com/@onixrp25" data-link="tiktok" target="_blank" rel="noreferrer">TikTok · @onixrp25</a>
+        <a href="https://onixpravila.github.io/onix-pravila/" target="_blank" rel="noreferrer">Pravila</a>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/onix.js"></script>
+    <script>OnixSite.boot('shop');</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+@{value={
+  "discord": "https://discord.gg/wdUntyZzt",
+  "tiktok": "https://www.tiktok.com/@onixrp25",
+  "connect": "cfx.re/join/lera5g7",
+  "cfxCode": "lera5g7",
+  "paypal": "seid98sutovic@gmail.com",
+  "paypalNote": "Uplata ide na PayPal. Nakon uplate otvori ticket na Discordu sa imenom karaktera i naručenim paketom.",
+  "pravila": "https://onixpravila.github.io/onix-pravila/",
+  "statusOnline": "Server je na mreži",
+  "statusOffline": "Server nije na mreži",
+  "homeLead": "Ovo nije još jedan server. Ovo je kuća. Priča ide ispred pobjede, karakter ispred ega, grad ispred kaosa.",
+  "streamers": [
+    {
+      "name": "ONIX Roleplay",
+      "platform": "tiktok",
+      "url": "https://www.tiktok.com/@onixrp25",
+      "img": "assets/onix-logo.png",
+      "live": false
+    }
+  ],
+  "news": [
+    {
+      "date": "2026-08-15",
+      "title": "Kuća je otvorena",
+      "body": "ONIX portal je aktivan. Pravila, atelier i dashboard su na jednom mjestu."
+    },
+    {
+      "date": "2026-08-15",
+      "title": "Donacije",
+      "body": "Katalozi vozila, premium i organizacija se uređuju iz admin panela. Plaćanje ide preko PayPal."
+    }
+  ],
+  "gallery": [
+    { "img": "assets/poster.png", "cap": "House" },
+    { "img": "assets/car-nocturne.png", "cap": "Nocturne" },
+    { "img": "assets/car-apex.png", "cap": "Apex" },
+    { "img": "assets/org-house.png", "cap": "Sjedište" }
+  ],
+  "videos": [
+    { "title": "Intro", "src": "assets/intro.mp4", "poster": "assets/poster.png" }
+  ],
+  "products": [
+    {
+      "id": "nocturne",
+      "cat": "vozilo",
+      "code": "ATELIER 01",
+      "name": "Nocturne S",
+      "blurb": "Noćna limuzina. Mokri asfalt, cyan rub, tišina u kabini.",
+      "price": 35,
+      "img": "assets/car-nocturne.png"
+    },
+    {
+      "id": "apex",
+      "cat": "vozilo",
+      "code": "ATELIER 02",
+      "name": "Apex Widebody",
+      "blurb": "Široko tijelo, zlatne čeljusti, samo za one koji znaju voziti priču.",
+      "price": 55,
+      "img": "assets/car-apex.png"
+    },
+    {
+      "id": "obsidian",
+      "cat": "vozilo",
+      "code": "ATELIER 03",
+      "name": "Obsidian Armour",
+      "blurb": "Teški SUV. Prisustvo prije brzine.",
+      "price": 70,
+      "img": "assets/car-obsidian.png"
+    },
+    {
+      "id": "volt",
+      "cat": "vozilo",
+      "code": "ATELIER 04",
+      "name": "Volt Custom",
+      "blurb": "Custom motor. Ulica, kiša, jedan čovjek.",
+      "price": 25,
+      "img": "assets/bike-volt.png"
+    },
+    {
+      "id": "house",
+      "cat": "premium",
+      "code": "MEMBER 01",
+      "name": "House Card",
+      "blurb": "Premium ulaz. Prioritet, slot, tišina u redu.",
+      "price": 20,
+      "img": "assets/premium-card.png"
+    },
+    {
+      "id": "black",
+      "cat": "premium",
+      "code": "MEMBER 02",
+      "name": "Black Circle",
+      "blurb": "Viši sloj. Vlastiti extras, brži ticket, ime u knjizi kuće.",
+      "price": 45,
+      "img": "assets/premium-card.png"
+    },
+    {
+      "id": "org-seed",
+      "cat": "org",
+      "code": "HOUSE 01",
+      "name": "Sjedište organizacije",
+      "blurb": "Donacija za bazu. Slot, težina, mjesto za priču.",
+      "price": 80,
+      "img": "assets/org-house.png"
+    },
+    {
+      "id": "org-crown",
+      "cat": "org",
+      "code": "HOUSE 02",
+      "name": "Kruna organizacije",
+      "blurb": "Jači paket za vođe. Više prostora, više prisustva u gradu.",
+      "price": 150,
+      "img": "assets/org-house.png"
+    }
+  ]
+}
+; PSPath=C:\Users\Seid Sutovic\Desktop\SKRIPTE FIVEM\Fivem-Server\onix-web\js\data.json; PSParentPath=C:\Users\Seid Sutovic\Desktop\SKRIPTE FIVEM\Fivem-Server\onix-web\js; PSChildName=data.json; PSDrive=; PSProvider=; ReadCount=1}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="bs">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Strimeri — ONIX ROLEPLAY</title>
+    <meta name="theme-color" content="#00b4ff" />
+    <link rel="icon" href="assets/onix-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/onix.css" />
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="scan"></div>
+    <nav class="top"></nav>
+
+    <header class="shop-hero">
+        <p class="kicker">Kreatori sadržaja</p>
+        <h1 class="shine">STRIMERI</h1>
+        <p class="lead" style="max-width:560px;color:var(--mute);margin-top:16px;line-height:1.7">
+            Lica kuće. Kick, YouTube, TikTok. Dodaješ ih u admin panelu.
+        </p>
+        <div class="filters">
+            <button type="button" class="chip on" data-sfilter="sve">Sve</button>
+            <button type="button" class="chip" data-sfilter="kick">Kick</button>
+            <button type="button" class="chip" data-sfilter="youtube">YouTube</button>
+            <button type="button" class="chip" data-sfilter="tiktok">TikTok</button>
+        </div>
+    </header>
+
+    <div class="stream-grid" id="streamers"></div>
+
+    <footer class="site">
+        <a href="index.html">← Kuća</a>
+        <a href="https://www.tiktok.com/@onixrp25" data-link="tiktok" target="_blank" rel="noreferrer">TikTok · @onixrp25</a>
+        <a href="dashboard.html">Dashboard</a>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/onix.js"></script>
+    <script>OnixSite.boot('stream');</script>
+</body>
+</html>

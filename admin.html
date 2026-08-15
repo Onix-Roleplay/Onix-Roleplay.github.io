@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="bs">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin — ONIX ROLEPLAY</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#00b4ff" />
+    <link rel="icon" href="assets/onix-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/onix.css" />
+</head>
+<body class="admin-body">
+    <div class="grain"></div>
+    <div class="scan"></div>
+
+    <div class="login-wrap" id="adminLogin">
+        <div class="login-card">
+            <img src="assets/onix-logo.png" alt="ONIX" />
+            <p class="kicker">Kuća</p>
+            <h1>ADMIN</h1>
+            <p class="lead">Donacije, slike, novosti, strimeri i linkovi. Posjetioci ovdje ne ulaze.</p>
+            <input class="field" id="adminPass" type="password" placeholder="Lozinka" autocomplete="current-password" />
+            <button type="button" class="btn gold" id="adminEnter">Uđi</button>
+            <a class="btn ghost" href="index.html" style="width:100%;justify-content:center;margin-top:8px">Nazad na sajt</a>
+        </div>
+    </div>
+
+    <div class="admin-app" id="adminApp" hidden>
+        <header class="admin-top">
+            <div class="admin-brand">
+                <img src="assets/onix-logo.png" alt="" />
+                <div>
+                    <p class="kicker">ONIX</p>
+                    <b>Admin panel</b>
+                </div>
+            </div>
+            <p class="admin-status" id="adminStatus">Spreman</p>
+            <div class="admin-actions">
+                <button type="button" class="btn gold" id="adminPublish">Objavi na sajt</button>
+                <button type="button" class="btn ghost" id="adminOut">Odjava</button>
+            </div>
+        </header>
+
+        <nav class="admin-tabs" id="adminTabs">
+            <button type="button" class="on" data-tab="donacije">Donacije</button>
+            <button type="button" data-tab="novosti">Novosti</button>
+            <button type="button" data-tab="strimeri">Strimeri</button>
+            <button type="button" data-tab="galerija">Galerija</button>
+            <button type="button" data-tab="linkovi">Linkovi</button>
+            <button type="button" data-tab="objava">Objava</button>
+        </nav>
+
+        <section class="admin-panel on" id="tab-donacije">
+            <div class="admin-split">
+                <form class="admin-form" id="productForm">
+                    <p class="kicker">Paket</p>
+                    <h3 id="productFormTitle">Nova donacija</h3>
+                    <input type="hidden" id="pId" />
+                    <label>Naziv</label>
+                    <input class="field" id="pName" placeholder="npr. Nocturne S" required />
+                    <label>Šifra</label>
+                    <input class="field" id="pCode" placeholder="ATELIER 01" />
+                    <label>Kategorija</label>
+                    <select class="field" id="pCat">
+                        <option value="vozilo">Vozilo</option>
+                        <option value="premium">Premium</option>
+                        <option value="org">Organizacija</option>
+                    </select>
+                    <label>Cijena (€)</label>
+                    <input class="field" id="pPrice" type="number" min="0" step="0.01" placeholder="35" />
+                    <label>Opis</label>
+                    <textarea class="field" id="pBlurb" rows="3" placeholder="Kratki opis paketa"></textarea>
+                    <label>Slika (fajl ili link)</label>
+                    <input class="field" id="pImg" placeholder="assets/... ili https://..." />
+                    <input class="field" id="pFile" type="file" accept="image/*" />
+                    <img class="admin-preview" id="pPreview" alt="" hidden />
+                    <div class="admin-form-btns">
+                        <button type="submit" class="btn gold">Spremi paket</button>
+                        <button type="button" class="btn ghost" id="pReset">Novi</button>
+                    </div>
+                </form>
+                <div class="admin-list" id="productList"></div>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="tab-novosti">
+            <div class="admin-split">
+                <form class="admin-form" id="newsForm">
+                    <p class="kicker">Obavijest</p>
+                    <h3>Nova obavijest</h3>
+                    <input type="hidden" id="nIndex" value="-1" />
+                    <label>Datum</label>
+                    <input class="field" id="nDate" type="date" />
+                    <label>Naslov</label>
+                    <input class="field" id="nTitle" placeholder="Naslov" />
+                    <label>Tekst</label>
+                    <textarea class="field" id="nBody" rows="4" placeholder="Šta se desilo na serveru"></textarea>
+                    <div class="admin-form-btns">
+                        <button type="submit" class="btn gold">Spremi obavijest</button>
+                        <button type="button" class="btn ghost" id="nReset">Nova</button>
+                    </div>
+                </form>
+                <div class="admin-list" id="newsList"></div>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="tab-strimeri">
+            <div class="admin-split">
+                <form class="admin-form" id="streamForm">
+                    <p class="kicker">Kreator</p>
+                    <h3>Novi strimer</h3>
+                    <input type="hidden" id="sIndex" value="-1" />
+                    <label>Ime</label>
+                    <input class="field" id="sName" placeholder="Ime na streamu" />
+                    <label>Platforma</label>
+                    <select class="field" id="sPlatform">
+                        <option value="tiktok">TikTok</option>
+                        <option value="kick">Kick</option>
+                        <option value="youtube">YouTube</option>
+                    </select>
+                    <label>Link</label>
+                    <input class="field" id="sUrl" placeholder="https://..." />
+                    <label>Slika</label>
+                    <input class="field" id="sImg" placeholder="assets/... ili https://..." />
+                    <input class="field" id="sFile" type="file" accept="image/*" />
+                    <label class="admin-check"><input type="checkbox" id="sLive" /> Live</label>
+                    <div class="admin-form-btns">
+                        <button type="submit" class="btn gold">Spremi strimera</button>
+                        <button type="button" class="btn ghost" id="sReset">Novi</button>
+                    </div>
+                </form>
+                <div class="admin-list" id="streamList"></div>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="tab-galerija">
+            <div class="admin-split">
+                <form class="admin-form" id="galForm">
+                    <p class="kicker">Galerija</p>
+                    <h3>Nova slika</h3>
+                    <input type="hidden" id="gIndex" value="-1" />
+                    <label>Naslov</label>
+                    <input class="field" id="gCap" placeholder="npr. House" />
+                    <label>Slika</label>
+                    <input class="field" id="gImg" placeholder="assets/... ili https://..." />
+                    <input class="field" id="gFile" type="file" accept="image/*" />
+                    <img class="admin-preview" id="gPreview" alt="" hidden />
+                    <div class="admin-form-btns">
+                        <button type="submit" class="btn gold">Spremi sliku</button>
+                        <button type="button" class="btn ghost" id="gReset">Nova</button>
+                    </div>
+                </form>
+                <div class="admin-list" id="galList"></div>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="tab-linkovi">
+            <form class="admin-form wide" id="linksForm">
+                <p class="kicker">Sajt</p>
+                <h3>Linkovi i tekstovi</h3>
+                <label>Discord</label>
+                <input class="field" id="lDiscord" />
+                <label>TikTok</label>
+                <input class="field" id="lTiktok" />
+                <label>Connect / cfx.re</label>
+                <input class="field" id="lConnect" />
+                <label>Cfx kod</label>
+                <input class="field" id="lCfx" />
+                <label>PayPal (email ili paypal.me)</label>
+                <input class="field" id="lPaypal" />
+                <label>Napomena uz uplatu</label>
+                <textarea class="field" id="lPaypalNote" rows="3"></textarea>
+                <label>Link knjige pravila</label>
+                <input class="field" id="lPravila" />
+                <label>Tekst ispod ONIX na početnoj</label>
+                <textarea class="field" id="lLead" rows="3"></textarea>
+                <label>Status kad je server online</label>
+                <input class="field" id="lOnline" />
+                <label>Status kad je server offline</label>
+                <input class="field" id="lOffline" />
+                <div class="admin-form-btns">
+                    <button type="submit" class="btn gold">Spremi linkove</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="admin-panel" id="tab-objava">
+            <div class="admin-form wide">
+                <p class="kicker">Objava</p>
+                <h3>Kako ide na sajt</h3>
+                <p class="note">Klikni <b>Objavi na sajt</b> gore desno. Svi posjetioci vide izmjene za oko minutu. Slike donacija ideš u Donacije → izaberi fajl → Spremi paket → Objavi.</p>
+                <label>GitHub token (samo ako uređuješ sa javnog linka, jednom)</label>
+                <input class="field" id="ghToken" type="password" placeholder="ghp_... ostaje samo na ovom računaru" autocomplete="off" />
+                <p class="note">Token treba pravo <b>repo</b> na nalogu koji drži OnixPravila. Lokalno (127.0.0.1) token nije potreban — server sam sprema i gurne.</p>
+                <div class="admin-form-btns">
+                    <button type="button" class="btn gold" id="saveToken">Spremi token ovdje</button>
+                    <button type="button" class="btn ghost" id="dlData">Preuzmi data.json</button>
+                    <a class="btn ghost" href="index.html" target="_blank" rel="noreferrer">Otvori sajt</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="bs">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard — ONIX ROLEPLAY</title>
+    <meta name="theme-color" content="#00b4ff" />
+    <link rel="icon" href="assets/onix-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/onix.css" />
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="scan"></div>
+    <nav class="top"></nav>
+
+    <div class="login-wrap" id="dashLogin">
+        <div class="login-card">
+            <img src="assets/onix-logo.png" alt="ONIX" />
+            <p class="kicker">Kontrolna ploča</p>
+            <h1>PRIJAVI SE</h1>
+            <p class="lead">Da uđeš u kuću trebaš se prijaviti. Discord nalog kasnije spajamo zvanično — sada ulaz u dashboard.</p>
+            <input class="field" id="dashDiscord" placeholder="Discord ime" />
+            <input class="field" id="dashCharacter" placeholder="Ime karaktera (IC)" />
+            <button type="button" class="btn gold" id="dashEnter">Prijavi se putem Discord-a</button>
+            <a class="btn ghost" href="https://discord.gg/wdUntyZzt" target="_blank" rel="noreferrer" style="width:100%;justify-content:center;margin-top:8px">Otvori Discord</a>
+            <a class="btn ghost" data-link="tiktok" href="https://www.tiktok.com/@onixrp25" target="_blank" rel="noreferrer" style="width:100%;justify-content:center;margin-top:8px">TikTok · @onixrp25</a>
+        </div>
+    </div>
+
+    <div class="dash" id="dashApp" hidden>
+        <aside class="rail">
+            <button type="button" class="on" data-panel="pregled">Pregled</button>
+            <button type="button" data-panel="karakter">Karakter</button>
+            <button type="button" data-panel="vozila">Vozila</button>
+            <button type="button" data-panel="donacije">Donacije</button>
+            <button type="button" data-panel="kazne">Kazne</button>
+            <button type="button" data-panel="ticket">Ticketovi</button>
+            <button type="button" id="dashOut">Odjava</button>
+        </aside>
+        <div class="d-main">
+            <section class="d-panel on" id="panel-pregled">
+                <p class="kicker">Dobrodošao</p>
+                <h2 id="dashHello">—</h2>
+                <p class="sub">IC: <span id="dashIc">—</span> · član od <span id="dashSince">—</span></p>
+                <div class="stats">
+                    <div class="stat"><span>FiveM</span><b id="dashPlayers">—</b></div>
+                    <div class="stat"><span>Discord članova</span><b id="dashMembers">—</b></div>
+                    <div class="stat"><span>Discord online</span><b id="dashOnline">—</b></div>
+                    <div class="stat"><span>Connect</span><b>lera5g7</b></div>
+                </div>
+                <div class="box">Ovdje će stajati statistika sa servera kad spojimo nalog. Izgled je spreman.</div>
+            </section>
+            <section class="d-panel" id="panel-karakter">
+                <h2>KARAKTER</h2>
+                <p class="sub">Lik, posao, organizacija.</p>
+                <div class="box">Karakter podaci dolaze sa servera. Ti ih kasnije povezuješ — ploča ostaje ista.</div>
+            </section>
+            <section class="d-panel" id="panel-vozila">
+                <h2>VOZILA</h2>
+                <p class="sub">Garaža i atelier narudžbe.</p>
+                <div class="box">Kad dodaš vozila u trgovinu, ovdje igrač vidi šta je uzeo.</div>
+            </section>
+            <section class="d-panel" id="panel-donacije">
+                <h2>DONACIJE</h2>
+                <p class="sub">Premium, organizacije, paketi.</p>
+                <div class="box">Donacije i pakete uređuješ u admin panelu. PayPal, slike, cijene. Dashboard pokazuje igraču trgovinu.</div>
+                <a class="btn gold" href="shop.html">Otvori trgovinu</a>
+            </section>
+            <section class="d-panel" id="panel-kazne">
+                <h2>KAZNE</h2>
+                <p class="sub">Warnovi, banovi, ticket ishodi.</p>
+                <div class="box">Čisto. Tako i treba. Lista kazni se veže kad staff panel bude spojen.</div>
+            </section>
+            <section class="d-panel" id="panel-ticket">
+                <h2>TICKETOVI</h2>
+                <p class="sub">Pomoć, donacije, prijave.</p>
+                <div class="box">Ticketovi žive na Discordu. Ovdje dolazi pregled kad spojiš bot / webhook.</div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/onix.js"></script>
+    <script>OnixSite.boot('dash');</script>
+</body>
+</html>
