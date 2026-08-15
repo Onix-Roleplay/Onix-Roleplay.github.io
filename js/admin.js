@@ -95,35 +95,75 @@
         };
     }
 
-    function ghApi(path) {
-        const g = state.lock.github;
+    function parsePrice(v) {
+        const n = Number(String(v || '').replace(',', '.').trim());
+        return Number.isFinite(n) ? n : 0;
+    }
+
+    function rememberToken() {
+        const t = ($('#ghToken') && $('#ghToken').value.trim()) || localStorage.getItem('onix-admin-gh') || '';
+        if (t) localStorage.setItem('onix-admin-gh', t);
+        return t;
+    }
+
+    function githubTargets() {
+        const fallback = (state.lock && state.lock.github) || {
+            owner: 'OnixPravila',
+            repo: 'OnixPravila.github.io',
+            branch: 'main'
+        };
+        const both = [
+            { owner: 'OnixPravila', repo: 'OnixPravila.github.io', branch: 'main' },
+            { owner: 'Onix-Roleplay', repo: 'Onix-Roleplay.github.io', branch: 'main' }
+        ];
+        const host = location.hostname;
+        if (host === 'onix-roleplay.github.io' || host === 'onixpravila.github.io') return both;
+        return [fallback];
+    }
+
+    function ghUrl(g, path) {
         return 'https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + path;
     }
 
-    async function ghPut(path, contentB64, message) {
-        const token = localStorage.getItem('onix-admin-gh') || '';
+    async function ghPutTo(g, path, contentB64, message) {
+        const token = rememberToken();
         if (!token) throw new Error('Nema GitHub tokena — stavi ga u tab Objava');
-        const g = state.lock.github;
         let sha;
-        const get = await fetch(ghApi(path) + '?ref=' + g.branch, { headers: ghHeaders(token) });
+        const get = await fetch(ghUrl(g, path) + '?ref=' + (g.branch || 'main'), { headers: ghHeaders(token) });
         if (get.ok) {
             const j = await get.json();
             sha = j.sha;
         }
-        const put = await fetch(ghApi(path), {
+        const put = await fetch(ghUrl(g, path), {
             method: 'PUT',
             headers: ghHeaders(token),
             body: JSON.stringify({
                 message: message,
                 content: contentB64,
-                branch: g.branch,
+                branch: g.branch || 'main',
                 sha: sha
             })
         });
         if (!put.ok) {
             const t = await put.text();
-            throw new Error(t.slice(0, 180) || 'GitHub greška');
+            throw new Error((g.repo || '') + ': ' + (t.slice(0, 160) || 'GitHub greška'));
         }
+        return path;
+    }
+
+    async function ghPut(path, contentB64, message) {
+        const targets = githubTargets();
+        let lastErr = null;
+        let ok = 0;
+        for (const g of targets) {
+            try {
+                await ghPutTo(g, path, contentB64, message);
+                ok += 1;
+            } catch (e) {
+                lastErr = e;
+            }
+        }
+        if (!ok) throw lastErr || new Error('GitHub greška');
         return path;
     }
 
@@ -189,14 +229,39 @@
         return payload.path;
     }
 
+    function saveProductFromForm() {
+        const name = ($('#pName').value || '').trim();
+        if (!name) return false;
+        const id = $('#pId').value || slug(name) + '-' + Date.now().toString().slice(-4);
+        const item = {
+            id: id,
+            cat: $('#pCat').value,
+            code: $('#pCode').value.trim() || 'PACK',
+            name: name,
+            blurb: $('#pBlurb').value.trim(),
+            price: parsePrice($('#pPrice').value),
+            img: $('#pImg').value.trim() || 'assets/onix-logo.png'
+        };
+        const list = state.data.products || [];
+        const i = list.findIndex((p) => p.id === id);
+        if (i >= 0) list[i] = item;
+        else list.unshift(item);
+        state.data.products = list;
+        $('#pId').value = id;
+        renderProducts();
+        return true;
+    }
+
     async function publish() {
         if (!state.data) return;
+        saveProductFromForm();
+        rememberToken();
         setStatus('Objavljujem…');
         $('#adminPublish').disabled = true;
         try {
             const json = JSON.stringify(state.data, null, 2);
             if (isLocal()) {
-                await localPost('/api/admin/save', { json: JSON.stringify(state.data, null, 2) });
+                await localPost('/api/admin/save', { json: json });
                 try {
                     const pub = await localPost('/api/admin/publish', {});
                     toast(pub.pushed ? 'Objavljeno — sajt se osvježava' : 'Spremljeno lokalno');
@@ -206,13 +271,23 @@
                     setStatus('Spremljeno lokalno');
                 }
             } else {
+                if (!rememberToken()) {
+                    setTab('objava');
+                    if ($('#ghToken')) $('#ghToken').focus();
+                    throw new Error('Nema GitHub tokena — stavi ga u tab Objava, pa opet Objavi');
+                }
                 await ghPut('js/data.json', toB64(json), 'Admin: izmjena sajta');
                 toast('Objavljeno. Pričekaj ~1 min pa Ctrl+F5');
                 setStatus('Objavljeno na GitHub');
             }
         } catch (e) {
-            toast(String(e.message || e));
+            const msg = String(e.message || e);
+            toast(msg);
             setStatus('Objava nije uspjela');
+            if (msg.toLowerCase().indexOf('token') !== -1) {
+                setTab('objava');
+                if ($('#ghToken')) $('#ghToken').focus();
+            }
         } finally {
             $('#adminPublish').disabled = false;
         }
@@ -247,7 +322,8 @@
         box.innerHTML = list.map((p) =>
             '<article class="admin-item" data-id="' + esc(p.id) + '">' +
             '<img src="' + esc(p.img || 'assets/onix-logo.png') + '" alt="" />' +
-            '<div><p class="code">' + esc(p.cat) + ' · ' + esc(p.code) + '</p><h4>' + esc(p.name) + '</h4><p>' + esc(p.price) + ' €</p></div>' +
+            '<div><p class="code">' + esc(p.cat) + ' · ' + esc(p.code) + '</p><h4>' + esc(p.name) + '</h4>' +
+            '<label class="price-line">Cijena <input class="field price-edit" data-price-p="' + esc(p.id) + '" type="number" min="0" step="0.01" value="' + esc(p.price) + '" /> €</label></div>' +
             '<div class="admin-item-btns">' +
             '<button type="button" class="btn ghost" data-edit-p="' + esc(p.id) + '">Uredi</button>' +
             '<button type="button" class="btn ghost danger" data-del-p="' + esc(p.id) + '">Obriši</button>' +
@@ -412,25 +488,8 @@
 
         $('#productForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = $('#pName').value.trim();
-            if (!name) return toast('Upiši naziv');
-            const id = $('#pId').value || slug(name) + '-' + Date.now().toString().slice(-4);
-            const item = {
-                id: id,
-                cat: $('#pCat').value,
-                code: $('#pCode').value.trim() || 'PACK',
-                name: name,
-                blurb: $('#pBlurb').value.trim(),
-                price: Number($('#pPrice').value) || 0,
-                img: $('#pImg').value.trim() || 'assets/onix-logo.png'
-            };
-            const list = state.data.products || [];
-            const i = list.findIndex((p) => p.id === id);
-            if (i >= 0) list[i] = item;
-            else list.unshift(item);
-            state.data.products = list;
+            if (!saveProductFromForm()) return toast('Upiši naziv');
             fillProduct(null);
-            renderProducts();
             toast('Paket spremljen — sad Objavi na sajt');
         });
         $('#pReset').addEventListener('click', () => fillProduct(null));
@@ -447,6 +506,15 @@
                 renderProducts();
                 toast('Obrisano — Objavi na sajt');
             }
+        });
+        $('#productList').addEventListener('change', (e) => {
+            const inp = e.target.closest('[data-price-p]');
+            if (!inp) return;
+            const p = (state.data.products || []).find((x) => x.id === inp.dataset.priceP);
+            if (!p) return;
+            p.price = parsePrice(inp.value);
+            if ($('#pId').value === p.id) $('#pPrice').value = p.price;
+            toast('Cijena ' + p.price + ' € — sad Objavi na sajt');
         });
 
         $('#newsForm').addEventListener('submit', (e) => {

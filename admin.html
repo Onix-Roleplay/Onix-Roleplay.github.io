@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/onix.css?v=22" />
+    <link rel="stylesheet" href="css/onix.css?v=23" />
 </head>
 <body class="admin-body">
     <div class="grain"></div>
@@ -193,11 +193,13 @@
         <section class="admin-panel" id="tab-objava">
             <div class="admin-form wide">
                 <p class="kicker">Objava</p>
-                <h3>Kako ide na sajt</h3>
-                <p class="note">Klikni <b>Objavi na sajt</b> gore desno. Svi posjetioci vide izmjene za oko minutu. Slike donacija ideš u Donacije → izaberi fajl → Spremi paket → Objavi.</p>
-                <label>GitHub token (samo ako uređuješ sa javnog linka, jednom)</label>
-                <input class="field" id="ghToken" type="password" placeholder="ghp_... ostaje samo na ovom računaru" autocomplete="off" />
-                <p class="note">Token treba pravo <b>repo</b> na nalogu koji drži OnixPravila. Lokalno (127.0.0.1) token nije potreban — server sam sprema i gurne.</p>
+                <h3>Bez ovoga cijena ne ide na sajt</h3>
+                <p class="note">1. Otvori link ispod i napravi token (prava <b>repo</b>, nalog <b>seid98sutovic-cloud</b>).<br>2. Kopiraj token, zalijepi ovdje, stisni <b>Spremi token</b>.<br>3. Vrati se na Donacije, upiši cijenu na kartici, pa gore desno <b>Objavi na sajt</b>.<br>Token ostaje samo u ovom browseru. Jednom ga staviš, poslije samo mijenjaš cijenu i objavljuješ.</p>
+                <p class="admin-form-btns" style="margin:0 0 16px">
+                    <a class="btn gold" href="https://github.com/settings/tokens/new?scopes=repo&amp;description=ONIX%20admin" target="_blank" rel="noreferrer">Napravi token</a>
+                </p>
+                <label>GitHub token</label>
+                <input class="field" id="ghToken" type="password" placeholder="ghp_... zalijepi ovdje" autocomplete="off" />
                 <div class="admin-form-btns">
                     <button type="button" class="btn gold" id="saveToken">Spremi token ovdje</button>
                     <button type="button" class="btn ghost" id="dlData">Preuzmi data.json</button>
@@ -207,6 +209,6 @@
         </section>
     </div>
 
-    <script src="js/admin.js?v=21"></script>
+    <script src="js/admin.js?v=23"></script>
 </body>
 </html>

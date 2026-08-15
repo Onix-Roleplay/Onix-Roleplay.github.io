@@ -975,6 +975,21 @@ select.field option { color: #111; background: #fff; }
 .admin-item h4 { font-family: var(--serif); letter-spacing: .08em; margin: 4px 0; }
 .admin-item p { color: var(--mute); font-size: 13px; }
 .admin-item-btns { display: flex; flex-direction: column; gap: 6px; }
+.price-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    color: var(--gold);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+}
+.price-edit {
+    width: 110px;
+    margin: 0;
+    padding: 8px 10px;
+}
 
 @media (max-width: 900px) {
     .admin-split, .admin-top { grid-template-columns: 1fr; }
