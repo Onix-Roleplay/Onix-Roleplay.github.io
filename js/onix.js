@@ -52,20 +52,45 @@
         if (cfg.name) document.title = document.title.replace(/^ONIX(?: ROLEPLAY)?(?= —|$)/, cfg.name);
     }
 
-    function paypalUrl(product, character) {
+    function paypalCheckout(product, character) {
         const email = 'seid98sutovic@gmail.com';
-        const name = encodeURIComponent((product.name || 'ONIX ROLEPLAY') + (character ? ' — ' + character : ''));
         const amount = Number(product.price) || 0;
-        const custom = encodeURIComponent(character || '');
-        return 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick' +
-            '&business=' + encodeURIComponent(email) +
-            '&item_name=' + name +
-            '&item_number=' + encodeURIComponent(product.id || '') +
-            '&amount=' + amount.toFixed(2) +
-            '&currency_code=EUR' +
-            '&no_shipping=1' +
-            '&charset=utf-8' +
-            '&custom=' + custom;
+        if (amount <= 0) return false;
+        const itemName = String((product.name || 'ONIX ROLEPLAY') + (character ? ' - ' + character : ''))
+            .replace(/[^\x20-\x7E]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .slice(0, 120);
+        const fields = {
+            cmd: '_xclick',
+            business: email,
+            item_name: itemName,
+            item_number: String(product.id || '').slice(0, 127),
+            amount: amount.toFixed(2),
+            currency_code: 'EUR',
+            quantity: '1',
+            no_shipping: '1',
+            no_note: '1',
+            charset: 'utf-8',
+            lc: 'US',
+            custom: String(character || '').slice(0, 200)
+        };
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'https://www.paypal.com/cgi-bin/webscr';
+        form.target = '_blank';
+        form.acceptCharset = 'UTF-8';
+        Object.keys(fields).forEach((key) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = fields[key];
+            form.appendChild(input);
+        });
+        document.body.appendChild(form);
+        form.submit();
+        form.remove();
+        return true;
     }
 
     function renderNav(active) {
@@ -349,12 +374,10 @@
             if (field) field.focus();
             return;
         }
-        const url = paypalUrl(product, character);
-        if (!url) {
+        if (!paypalCheckout(product, character)) {
             toast('PayPal nije spojen');
             return;
         }
-        window.open(url, '_blank', 'noopener');
         toast('PayPal otvoren — zatim ticket na Discord');
     }
 
