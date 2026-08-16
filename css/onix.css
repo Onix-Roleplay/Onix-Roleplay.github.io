@@ -715,6 +715,16 @@ footer.site {
     bottom: 22px;
     z-index: 45;
 }
+.yt-bgm {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
 .soundwrap button {
     background: rgba(3,7,18,.7);
     border: 1px solid var(--line);

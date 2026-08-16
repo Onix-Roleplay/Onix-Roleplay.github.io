@@ -169,11 +169,67 @@
         }
     }
 
+    function youtubeBgm() {
+        const host = $('#ytBgm');
+        if (!host) return null;
+        let player = null;
+        let ready = false;
+        let wantPlay = false;
+        const volume = 18;
+        const apply = () => {
+            if (!player || !ready) return;
+            player.setVolume(volume);
+            if (wantPlay) player.playVideo();
+            else player.pauseVideo();
+        };
+        const boot = () => {
+            if (player) return;
+            player = new YT.Player('ytBgm', {
+                videoId: 'mdJQZHodyxo',
+                width: 200,
+                height: 200,
+                playerVars: {
+                    autoplay: 0,
+                    controls: 1,
+                    loop: 1,
+                    playlist: 'mdJQZHodyxo',
+                    modestbranding: 1,
+                    rel: 0,
+                    playsinline: 1,
+                    origin: location.origin
+                },
+                events: {
+                    onReady: () => { ready = true; apply(); },
+                    onStateChange: (e) => {
+                        if (e.data === YT.PlayerState.ENDED && wantPlay) player.playVideo();
+                    }
+                }
+            });
+        };
+        if (window.YT && YT.Player) boot();
+        else {
+            const prev = window.onYouTubeIframeAPIReady;
+            window.onYouTubeIframeAPIReady = function () {
+                if (typeof prev === 'function') prev();
+                boot();
+            };
+            if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+                const s = document.createElement('script');
+                s.src = 'https://www.youtube.com/iframe_api';
+                document.head.appendChild(s);
+            }
+        }
+        return {
+            play() { wantPlay = true; apply(); },
+            pause() { wantPlay = false; apply(); }
+        };
+    }
+
     function setupGate() {
         const gate = $('.gate');
         const video = $('#intro');
         const gateVideo = $('#gateVideo');
-        const bgm = $('#bgm');
+        const bgm = youtubeBgm() || $('#bgm');
         const soundBtn = $('#soundBtn');
         if (gateVideo) {
             gateVideo.muted = true;
@@ -205,8 +261,9 @@
                 video.play().catch(() => {});
             }
             if (bgm) {
-                bgm.volume = .18;
-                bgm.play().catch(() => {});
+                if ('volume' in bgm) bgm.volume = .18;
+                const play = bgm.play();
+                if (play && play.catch) play.catch(() => {});
             }
             setTimeout(() => gate.remove(), 900);
         };
@@ -217,8 +274,11 @@
             soundBtn.addEventListener('click', () => {
                 on = !on;
                 soundBtn.textContent = on ? 'Muzika · uklj' : 'Muzika · isklj';
-                if (on) { bgm.volume = .18; bgm.play().catch(() => {}); }
-                else bgm.pause();
+                if (on) {
+                    if ('volume' in bgm) bgm.volume = .18;
+                    const play = bgm.play();
+                    if (play && play.catch) play.catch(() => {});
+                } else bgm.pause();
             });
         }
     }
