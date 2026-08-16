@@ -53,16 +53,9 @@
     }
 
     function paypalUrl(product, character) {
-        const p = String(cfg.paypal || '').trim();
-        if (!p) return '';
+        const email = 'seid98sutovic@gmail.com';
         const name = encodeURIComponent((product.name || 'ONIX ROLEPLAY') + (character ? ' — ' + character : ''));
         const amount = Number(product.price) || 0;
-        if (/paypal\.me/i.test(p)) {
-            const base = p.replace(/\/$/, '');
-            const url = base.startsWith('http') ? base : 'https://' + base.replace(/^\/\//, '');
-            return url + '/' + amount + 'EUR';
-        }
-        const email = p.replace(/^mailto:/, '');
         const custom = encodeURIComponent(character || '');
         return 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick' +
             '&business=' + encodeURIComponent(email) +

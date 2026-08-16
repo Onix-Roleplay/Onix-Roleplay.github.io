@@ -111,6 +111,7 @@
             if ((!out[k] || !out[k].length) && base[k] && base[k].length) out[k] = base[k];
         });
         if (!out.products || !out.products.length) out.products = base.products || [];
+        out.paypal = 'seid98sutovic@gmail.com';
         return out;
     }
 
@@ -456,7 +457,7 @@
         $('#lTiktok').value = d.tiktok || '';
         $('#lConnect').value = d.connect || '';
         $('#lCfx').value = d.cfxCode || '';
-        $('#lPaypal').value = d.paypal || '';
+        $('#lPaypal').value = 'seid98sutovic@gmail.com';
         $('#lPaypalNote').value = d.paypalNote || '';
         $('#lPravila').value = d.pravila || '';
         $('#lLead').value = d.homeLead || '';
@@ -739,7 +740,7 @@
                 tiktok: $('#lTiktok').value.trim(),
                 connect: $('#lConnect').value.trim(),
                 cfxCode: $('#lCfx').value.trim(),
-                paypal: $('#lPaypal').value.trim(),
+                paypal: 'seid98sutovic@gmail.com',
                 paypalNote: $('#lPaypalNote').value.trim(),
                 pravila: $('#lPravila').value.trim(),
                 homeLead: $('#lLead').value.trim(),
