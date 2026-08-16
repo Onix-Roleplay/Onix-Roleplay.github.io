@@ -176,11 +176,19 @@
         let ready = false;
         let wantPlay = false;
         const volume = 18;
+        const startAt = 12;
+        const jumpToStart = () => {
+            if (!player || !ready) return;
+            player.seekTo(startAt, true);
+        };
         const apply = () => {
             if (!player || !ready) return;
             player.setVolume(volume);
-            if (wantPlay) player.playVideo();
-            else player.pauseVideo();
+            if (wantPlay) {
+                const t = player.getCurrentTime ? player.getCurrentTime() : 0;
+                if (t < startAt - 0.4) jumpToStart();
+                player.playVideo();
+            } else player.pauseVideo();
         };
         const boot = () => {
             if (player) return;
@@ -192,6 +200,7 @@
                     autoplay: 0,
                     controls: 1,
                     loop: 1,
+                    start: startAt,
                     playlist: 'mdJQZHodyxo',
                     modestbranding: 1,
                     rel: 0,
@@ -199,9 +208,17 @@
                     origin: location.origin
                 },
                 events: {
-                    onReady: () => { ready = true; apply(); },
+                    onReady: () => { ready = true; jumpToStart(); apply(); },
                     onStateChange: (e) => {
-                        if (e.data === YT.PlayerState.ENDED && wantPlay) player.playVideo();
+                        if (!wantPlay) return;
+                        if (e.data === YT.PlayerState.ENDED) {
+                            jumpToStart();
+                            player.playVideo();
+                            return;
+                        }
+                        if (e.data === YT.PlayerState.PLAYING && player.getCurrentTime() < startAt - 0.4) {
+                            jumpToStart();
+                        }
                     }
                 }
             });
