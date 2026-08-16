@@ -172,56 +172,71 @@
     function youtubeBgm() {
         const host = $('#ytBgm');
         if (!host) return null;
+        const videoId = 'mdJQZHodyxo';
+        const startAt = 12;
+        const volume = 18;
         let player = null;
         let ready = false;
         let wantPlay = false;
-        const volume = 18;
-        const startAt = 12;
-        const jumpToStart = () => {
+        let watch = 0;
+        const time = () => {
+            try { return Number(player.getCurrentTime()) || 0; } catch (e) { return 0; }
+        };
+        const startFrom12 = () => {
             if (!player || !ready) return;
-            player.seekTo(startAt, true);
+            player.setVolume(volume);
+            player.loadVideoById({ videoId: videoId, startSeconds: startAt });
+        };
+        const keepStart = () => {
+            if (!wantPlay || !player || !ready) return;
+            const t = time();
+            if (t > 0.05 && t < startAt - 0.2) player.seekTo(startAt, true);
         };
         const apply = () => {
             if (!player || !ready) return;
             player.setVolume(volume);
-            if (wantPlay) {
-                const t = player.getCurrentTime ? player.getCurrentTime() : 0;
-                if (t < startAt - 0.4) jumpToStart();
-                player.playVideo();
-            } else player.pauseVideo();
+            if (!wantPlay) {
+                player.pauseVideo();
+                return;
+            }
+            if (time() < startAt - 0.2) startFrom12();
+            else player.playVideo();
         };
         const boot = () => {
             if (player) return;
             player = new YT.Player('ytBgm', {
-                videoId: 'mdJQZHodyxo',
+                videoId: videoId,
                 width: 200,
                 height: 200,
                 playerVars: {
                     autoplay: 0,
-                    controls: 1,
-                    loop: 1,
+                    controls: 0,
+                    disablekb: 1,
+                    fs: 0,
                     start: startAt,
-                    playlist: 'mdJQZHodyxo',
                     modestbranding: 1,
                     rel: 0,
                     playsinline: 1,
                     origin: location.origin
                 },
                 events: {
-                    onReady: () => { ready = true; jumpToStart(); apply(); },
+                    onReady: () => {
+                        ready = true;
+                        player.cueVideoById({ videoId: videoId, startSeconds: startAt });
+                        player.setVolume(volume);
+                        apply();
+                    },
                     onStateChange: (e) => {
                         if (!wantPlay) return;
                         if (e.data === YT.PlayerState.ENDED) {
-                            jumpToStart();
-                            player.playVideo();
+                            startFrom12();
                             return;
                         }
-                        if (e.data === YT.PlayerState.PLAYING && player.getCurrentTime() < startAt - 0.4) {
-                            jumpToStart();
-                        }
+                        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.BUFFERING) keepStart();
                     }
                 }
             });
+            if (!watch) watch = setInterval(keepStart, 300);
         };
         if (window.YT && YT.Player) boot();
         else {
